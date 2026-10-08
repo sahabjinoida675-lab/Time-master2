@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Master: Time Travel Magic</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0f0c20;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(25, 20, 50, 0.8);
+            border: 1px solid #7928ca;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(121, 40, 202, 0.4);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #00dfd8;
+            text-shadow: 0 0 10px #00dfd8;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            font-size: 0.9rem;
+            color: #a0a0c0;
+            margin-bottom: 25px;
+        }
+
+        .display-panel {
+            background: #05030a;
+            border: 2px solid #00dfd8;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 15px rgba(0, 223, 216, 0.2);
+        }
+
+        .year-label {
+            font-size: 0.8rem;
+            color: #ff007f;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .current-year {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 15px #fff;
+            font-family: monospace;
+            margin: 5px 0;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            color: #c0c0e0;
+            margin-bottom: 8px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #7928ca;
+            background: #15102a;
+            color: #00dfd8;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00dfd8;
+            box-shadow: 0 0 10px rgba(0, 223, 216, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #7928ca, #ff007f);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .log-box {
+            margin-top: 25px;
+            background: #080612;
+            border-radius: 10px;
+            padding: 12px;
+            min-height: 80px;
+            max-height: 120px;
+            overflow-y: auto;
+            border: 1px solid #332050;
+            font-size: 0.85rem;
+            color: #00dfd8;
+            text-align: left;
+        }
+
+        .portal-animation {
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px rgba(0, 223, 216, 0.4); }
+            100% { box-shadow: 0 0 35px rgba(255, 0, 127, 0.8); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <h1>TIME MASTER</h1>
+        <p class="subtitle">Time Travel Magic Portal</p>
+
+        <div class="display-panel" id="panel">
+            <div class="year-label">Current Timeline</div>
+            <div class="current-year" id="yearDisplay">2026</div>
+        </div>
+
+        <div class="input-group">
+            <label for="destinationInput">Enter Destination Year:</label>
+            <input type="number" id="destinationInput" placeholder="e.g. 1999 or 2050" value="2050">
+        </div>
+
+        <button onclick="travelInTime()">INITIATE TIME JUMP</button>
+
+        <div class="log-box" id="logBox">
+            > System Ready...<br>
+            > Awaiting temporal coordinates...
+        </div>
+    </div>
+
+    <script>
+        function travelInTime() {
+            const input = document.getElementById('destinationInput');
+            const yearDisplay = document.getElementById('yearDisplay');
+            const logBox = document.getElementById('logBox');
+            const panel = document.getElementById('panel');
+
+            const targetYear = parseInt(input.value);
+
+            if (isNaN(targetYear)) {
+                logBox.innerHTML +=
